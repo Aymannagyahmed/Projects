@@ -1,0 +1,12 @@
+Using FreeRTOS
+test on Semaphore
+vSemaphoreCreateBinary(), xSemaphoreTake(), xSemaphoreGive().
+
+task1 has periory (3) High_periorty:
+1.Take Semaphore using xSemaphoreTake().
+2.then Take Semaphore again ( it bolcks it self)
+
+
+task2 has periory (2) Low_periorty:
+1.task2 has low_periorty it is the first task will run
+2.then give the Semaphore to make task1 run

@@ -1,0 +1,28 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that check if the number if positive or negative.
+ */
+
+
+#include<stdio.h>
+void positiveOrNegative(int num);
+void main(){
+	int number =0;
+	positiveOrNegative(number);
+
+
+}
+void positiveOrNegative(int num){
+	if(num>0){
+		printf("(%d) is positive number\n",num);
+	}
+	else if(num<0){
+		printf("(%d) is negative number\n",num);
+	}
+	else{
+		printf("The number is Zero\n");
+	}
+}

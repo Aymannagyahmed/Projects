@@ -1,0 +1,58 @@
+/*
+ * assignment_4_12.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  Array that contains integer values, some of these
+ *  values are repeated with an even number of repetitions,
+ *  and only one value is repeated with an odd number of
+ *  repetitions. Write a
+ *  C function that’s take the array as
+ *  input and the array size and return the number which has
+ *  odd numbers of repetitions.
+ */
+#include<stdio.h>
+#define sizee 11
+int whichNumHasOddNumbersofRepetitions(int* arr_ptr,int size);
+void main(void){
+	int x;
+	int arr[sizee]={1,2,2,3,2,2,3,4,4,4,4};
+	x=whichNumHasOddNumbersofRepetitions(arr,sizee);
+	printf("The Num Has Odd Numbers of Repetitions is:\n%d\n",x);
+
+}
+
+int whichNumHasOddNumbersofRepetitions(int* arr_ptr,int size){
+	int i,j,flag;
+	int count;
+	int num=*(arr_ptr);
+	//int* rev_ptr=arr_ptr;
+	//int temp[size]=arr_ptr;
+	for(i=0;i<size;i++){
+		count=0;
+		flag=0;
+		num=*(arr_ptr+i);
+		if(i!=0){
+			for(j=i-1;j>=0;j--){
+				if(num==*(arr_ptr+j)){
+					flag=1;
+				}
+			}
+		}
+		if(flag==1){
+			continue;
+		}
+		for(j=i+1;j<size;j++){
+
+			if(num==*(arr_ptr+j)){
+				count++;
+			}
+		}
+		if(!(count%2)){
+			return num;
+		}
+	}
+
+	return 0;
+
+}

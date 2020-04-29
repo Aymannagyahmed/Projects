@@ -1,0 +1,41 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  C function that return the count of the longest
+ *  consecutive occurrence of a given number in an array.
+ *  Example:
+ *  Array={1,2,2,3,3,3,3,4,4,4,4,3,3,3} and searching for 3
+ *   result = 4
+ */
+#include<stdio.h>
+#define sizee 14
+int countOfLongestConsecutiveOccurrence(int arr[],int size,int searchNumber);
+
+void main(void){
+	int Array[sizee]={1,2,2,3,3,3,3,4,4,4,4,3,3,3};
+	int ret;
+	int searchingNumber=3;
+	ret= countOfLongestConsecutiveOccurrence(Array,sizee,searchingNumber);
+	printf("%d ",ret);
+}
+
+int countOfLongestConsecutiveOccurrence(int arr[],int size,int searchNumber){
+	int i;
+	int count=1;
+	int ret=count;
+	for(i=0;i<size;i++){
+		if((arr[i]==arr[i+1])&&(arr[i]==searchNumber)){
+			count++;
+			if(ret<count){
+				ret=count;
+			}
+		}
+		else{
+			count=1;
+		}
+
+	}
+	return ret;
+}

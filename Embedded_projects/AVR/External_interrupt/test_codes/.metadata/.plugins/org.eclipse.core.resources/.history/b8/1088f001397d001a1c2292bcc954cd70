@@ -1,0 +1,33 @@
+/*
+ * main.c
+ *
+ *  Created on: Apr 12, 2020
+ *      Author: AymanW
+ */
+
+#include "ex_interrupt.h"
+
+void main(void)
+{
+	/*gpio init*/
+
+/*
+	//Enable global ISR
+	sei();
+	//which ISR do you want and when it will happen
+	EX_ISR_TRIGGER_EDGE(ex_int0,rising_edge);
+	EX_ISR_ENABLE(ex_int0);
+*/
+}
+
+/*
+ISR(INT0_vect)
+{
+	DDRA=0xff;
+}
+
+*/
+
+
+
+

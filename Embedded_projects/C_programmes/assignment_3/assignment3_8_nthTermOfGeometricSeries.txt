@@ -1,0 +1,29 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  program that computes the nth term of the geometric
+ *  series:
+ *  1, 3, 9, 27, …
+ *  Run the program to compute the 10th term of the given series.
+ */
+#include <stdio.h>
+long long* nthTermOfGeometricSeries(int firstTerm,int factor,int nthTerm);
+void main(void){
+	int fterm=1;
+	int factor=3;
+	int n=10;
+	long long* result;
+	result=nthTermOfGeometricSeries(fterm,factor,n);
+	printf("the %dth term is %I64d\n",n,*result);
+}
+long long* nthTermOfGeometricSeries(int firstTerm,int factor,int nthTerm){
+	int i;
+	long long *num=(long long*)(&firstTerm);
+	for(i=1;i<nthTerm;i++){
+		*num=*num*factor;
+	}
+	return num;
+}
+

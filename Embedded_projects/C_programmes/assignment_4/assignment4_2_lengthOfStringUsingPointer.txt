@@ -1,0 +1,26 @@
+/*
+ * assignment_4_2.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  find length of a given string using pointer.
+ */
+#include<stdio.h>
+#define sizee 50
+
+int lengthOfStringUsingPointer(char* str);
+void main(void){
+	char strn[sizee]="ayman";
+	int len=lengthOfStringUsingPointer(strn);
+	printf("%d\n",len);
+
+}
+
+
+int lengthOfStringUsingPointer(char* str){
+	int i=0;
+	while(*(str+i)!='\0'){
+		i++;
+	}
+	return i;
+}

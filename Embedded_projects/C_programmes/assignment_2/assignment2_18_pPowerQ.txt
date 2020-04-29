@@ -1,0 +1,47 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  Given a positive integer z, check if z can be written as (p) power (q)
+ *  where p and q are positive integers than 1 if z can be written as (p) power (q)
+ *  return 1 else return 0.
+ */
+#include<stdio.h>
+int pPowerQ(int num);
+void main(){
+	int mumber =16;
+	int ret;
+	ret = pPowerQ(mumber);
+}
+int pPowerQ(int num){
+	int temp=num;
+	int p;
+	int q=0;
+	for(p=2;p<((num/2)+1);p++){
+		if(!(temp%p)){
+			while( (temp!=1)&&(!(temp%p)) ){
+				temp=temp/p;
+				if( ((temp%p)!=0)&&(temp!=1) ){
+					break;
+				}
+				q++;
+			}
+			if( (q>1)&&(temp==1) ){
+				break;
+			}
+		}
+		else{
+			continue;
+		}
+	}
+	if(q>1){
+
+		printf("num %d can write as %d power %d",num,p,q);
+		return 1;
+	}
+	else{
+		printf("num %d can NOT written as p power q",num);
+		return 0;
+	}
+}

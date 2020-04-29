@@ -1,0 +1,38 @@
+/*
+ * assignment_4_6.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  print all the array elements and the maximum
+ *  number in array using array of pointers.
+ */
+#include<stdio.h>
+#define sizee 5
+int* printArrayAndRetMaxUsingArrayOfPointers(int* arr,int size);
+void main(void){
+	int arr[sizee]={1,10,3,4,5};
+	int* maxx=printArrayAndRetMaxUsingArrayOfPointers(arr,sizee);
+	printf("%d",*maxx);
+}
+int* printArrayAndRetMaxUsingArrayOfPointers(int* arr,int size){
+	int i;
+	////////////////////////////
+	int* max=arr;
+	int* arrOfptr[size];
+	for(i=0;i<size;i++){
+		*(arrOfptr+i)=(arr+i);
+	}
+	for(i=1;i<size;i++){
+		/////////////////////////////////
+		if(( *(*(arrOfptr+i)) )>*max){
+			///////////////////////////////
+			max=*(arrOfptr+i);
+		}
+	}
+	for(i=0;i<size;i++){
+		printf("%d ",**(arrOfptr+i));
+	}
+	printf("\n");
+	////////////////////////////
+	return max;
+}

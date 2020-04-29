@@ -1,0 +1,122 @@
+/*
+ * EX_interrupt.c
+ *
+ *  Created on: Apr 13, 2020
+ *      Author: AymanW
+ */
+#include "ex_interrupt.h"
+/*********************************Pointer to function to assigned to ISR*********************************************/
+static void (*INT0_PTR) (void)= NULL_PTR;
+static void (*INT1_PTR) (void)= NULL_PTR;
+static void (*INT2_PTR) (void)= NULL_PTR;
+/**********************************************Call back function****************************************************/
+void EX_ISR_SET_CALLBACK( ex_isr_surse_t isr_surce, void (*LOCAL_PTR)(void) )
+{
+
+}
+/********************************************************************************************************************/
+void EX_ISR_ENABLE(ex_isr_surse_t isr_surce)
+{
+	switch(isr_surce)
+	{
+		case ex_int0:
+			SET_BIT(GICR,INT0);
+			break;
+		case ex_int1:
+			SET_BIT(GICR,INT1);
+			break;
+		case ex_int2:
+			SET_BIT(GICR,INT2);
+			break;
+		default:
+			break;
+	}
+}
+void EX_ISR_DISABLE(ex_isr_surse_t isr_surce)
+{
+	switch(isr_surce)
+	{
+		case ex_int0:
+			CLEAR_BIT(GICR,INT0);
+			break;
+		case ex_int1:
+			CLEAR_BIT(GICR,INT1);
+			break;
+		case ex_int2:
+			CLEAR_BIT(GICR,INT2);
+			break;
+		default:
+			break;
+	}
+}
+void EX_ISR_TRIGGER_EDGE(ex_isr_surse_t isr_surce,trigger_edge_t edge)
+{
+	switch(isr_surce)
+	{
+		case ex_int0:
+			switch(edge)
+			{
+				case low_level:
+					CLEAR_BIT(MCUCR,ISC00);
+					CLEAR_BIT(MCUCR,ISC01);
+					break;
+				case any_logic_change:
+					SET_BIT(MCUCR,ISC00);
+					CLEAR_BIT(MCUCR,ISC01);
+					break;
+				case faling_edge:
+					CLEAR_BIT(MCUCR,ISC00);
+					SET_BIT(MCUCR,ISC01);
+					break;
+				case rising_edge:
+					SET_BIT(MCUCR,ISC00);
+					SET_BIT(MCUCR,ISC01);
+					break;
+				default:
+					break;
+			}
+			break;
+
+		case ex_int1:
+			switch(edge)
+			{
+				case low_level:
+					CLEAR_BIT(MCUCR,ISC10);
+					CLEAR_BIT(MCUCR,ISC11);
+					break;
+				case any_logic_change:
+					SET_BIT(MCUCR,ISC10);
+					CLEAR_BIT(MCUCR,ISC11);
+					break;
+				case faling_edge:
+					CLEAR_BIT(MCUCR,ISC10);
+					SET_BIT(MCUCR,ISC11);
+					break;
+				case rising_edge:
+					SET_BIT(MCUCR,ISC10);
+					SET_BIT(MCUCR,ISC11);
+					break;
+				default:
+					break;
+			}
+			break;
+
+		case ex_int2:
+			switch(edge)
+			{
+				case faling_edge:
+					CLEAR_BIT(MCUCR,ISC2);
+					break;
+				case rising_edge:
+					SET_BIT(MCUCR,ISC2);
+					break;
+				default:
+					CLEAR_BIT(MCUCR,ISC2);
+					break;
+			}
+			break;
+		default:
+			break;
+	}
+}
+

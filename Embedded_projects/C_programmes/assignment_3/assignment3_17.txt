@@ -1,0 +1,39 @@
+/*
+ * assignment_3_17.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  C Program for swapping two arrays “A & B” with
+ *  different lengths. B will be always the smallest array.
+ *  int * Swap (int a_size,int *a,int b_size,int *b)
+ */
+#include<stdio.h>
+#define sizeeA 8
+#define sizeeB 8
+int * Swap2Array(int a_size,int *a,int b_size,int *b);
+void main(void){
+	int i;
+	int a[sizeeA]={22,23,24,25,26,27,28,29};
+	int b[sizeeB]={1,2,3,4,5,6,7,8};
+	Swap2Array(sizeeA,a,sizeeB,b);
+	for(i=0;i<sizeeB;i++){
+		printf("%d ",a[i]);
+	}
+	puts("\n");
+	for(i=0;i<sizeeB;i++){
+		printf("%d ",b[i]);
+	}
+}
+
+int * Swap2Array(int a_size,int *a,int b_size,int *b){
+	int i=0;
+	int temp;
+	for(i=0;i<b_size;i++){
+		temp=a[i];
+		a[i]=b[i];
+		b[i]=temp;
+	}
+	return a;
+}
+
+

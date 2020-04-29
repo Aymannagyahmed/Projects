@@ -1,0 +1,34 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  The sum of an array is the sum of its individual elements. For
+ *  example, if an array is numbers = {1, 2, 3, 4}, the sum of the array
+ *  is 1+2+3+4 = 10.
+ *  Function Description: Complete the function summation. The
+ *  function must return the integer sum of the numbers array.
+ *  int summation(int numbers_size, int* numbers)
+ */
+#include<stdio.h>
+#define size 4
+int summation(int numbers_size, int numbers[]);
+void main(void){
+	int arr[size];
+	int i;
+	for(i=0;i<size;i++){
+		printf("Enter element num (%d)\n",i+1);
+		fflush(stdout);
+		scanf("%d",&arr[i]);
+	}
+	int result = summation(size,arr);
+	printf("the summation of the array is %d\n",result);
+}
+int summation(int numbers_size, int numbers[]){
+	int ret;
+	int i;
+	for(i=0;i<numbers_size;i++){
+		ret=ret+numbers[i];
+	}
+	return ret;
+}

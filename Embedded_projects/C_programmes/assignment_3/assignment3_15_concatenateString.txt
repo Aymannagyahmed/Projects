@@ -1,0 +1,30 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  function to concatenate two strings without using strcat function.
+ */
+#include<stdio.h>
+#define sizee 500
+void concatenateString(char str1[],char str2[]);
+void main(void){
+	char strn1[sizee]="abc";
+	char strn2[sizee]="def";
+	concatenateString(strn1,strn2);
+	printf("%s ",strn1);
+}
+void concatenateString(char str1[],char str2[]){
+	int i;
+	int j;
+	for(i=0;str1[i]!='\0';i++)
+	{
+
+	}
+	for(j=0;str2[j]!='\0';j++)
+	{
+		str1[i]=str2[j];
+		i++;
+	}
+	str1[i]='\0';
+}

@@ -1,0 +1,25 @@
+/*
+ * assignment4_1.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  function two SWAP two pointers. Hint: use pointer to pointer as a function argument
+ */
+#include<stdio.h>
+void swap2ptr(int ** ptr1,int ** ptr2);
+void main(void){
+	int x=10;
+	int y=20;
+	int* x_ptr=&x;
+	int* y_ptr=&y;
+	printf("old is %d\t\t%d\n",x,y);
+	printf("old is %p\t%p\n",x_ptr,y_ptr);
+	swap2ptr(&x_ptr,&y_ptr);
+	printf("new is %d\t\t%d\n",x,y);
+	printf("new is %p\t%p\n",x_ptr,y_ptr);
+}
+void swap2ptr(int ** ptr1,int ** ptr2){
+	int* temp_ptr=*ptr1;
+	*ptr1=*ptr2;
+	*ptr2=temp_ptr;
+}

@@ -1,0 +1,33 @@
+/*
+ * UltraSonic.c
+ *
+ * Created: 4/28/2020 8:43:47 PM
+ * Author : AymanW
+ */ 
+
+#define  F_CPU 8000000UL
+#include <avr/io.h>
+#include "Std_Types.h"
+#include "Mem_Map32.h"
+#include "DIO_Interface.h"
+#include "EX_Interrupt.h"
+#include "Timers.h"
+#include "Timers_Services.h"
+
+
+int main(void)
+{
+	DIO_Init();
+	LCD_Init();
+	Timer1_Init(TIMER1_NORMAL_MODE,TIMER1_SCALER_8,OCRA_DISCONNECTED,OCRB_DISCONNECTED);
+   ULTRASONIC_Init();
+   u16 distance;
+    while (1) 
+    {
+		distance=ULTRASONIC_GetDistance(ULTRASONIC_1);
+		LCD_GoTo(0,6);
+		LCD_WriteNumber(distance);
+    }
+	return 0;
+}
+

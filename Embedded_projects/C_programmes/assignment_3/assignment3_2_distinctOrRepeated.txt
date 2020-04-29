@@ -1,0 +1,35 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *   Write a function which, given a string, return TRUE if all
+ *   characters are distinct and FALSE if any character is repeated.
+ */
+#include<stdio.h>
+#define TRUE 1
+#define FALSE 0
+#define size 20
+int distinctOrRepeated(char c[]);
+void main(void){
+	char str[size]="abcdeg";
+	int result=distinctOrRepeated(str);
+	printf("%d\n",result);
+}
+int distinctOrRepeated(char c[]){
+	char key;
+	int i=0;
+	int j;
+	while(c[i]!='\0'){
+		key=c[i];
+		j=i+1;
+		while(c[j]!='\0'){
+			if(key==c[j]){
+				return FALSE;
+			}
+			j++;
+		}
+		i++;
+	}
+	return TRUE;
+}

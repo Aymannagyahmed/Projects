@@ -1,0 +1,29 @@
+/*
+ * assignment_4_7.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  C function to swap two numbers using bitwise
+ *  operation and call it using pointer to function.
+ */
+#include<stdio.h>
+
+void swapBitwise(int* fNum,int* sNum);
+void (*funPTR)(int*,int*);
+void main(void){
+	int x=10;
+	int y=20;
+	funPTR=swapBitwise;
+	funPTR(&x,&y);
+	printf("x is %d and y is %d \n",x,y);
+
+
+
+}
+
+
+void swapBitwise(int* fNum,int* sNum){
+	*fNum=*fNum^*sNum;
+	*sNum=*fNum^*sNum;
+	*fNum=*fNum^*sNum;
+}

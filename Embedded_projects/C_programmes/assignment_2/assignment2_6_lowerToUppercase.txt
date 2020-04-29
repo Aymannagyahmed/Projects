@@ -1,0 +1,30 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that converts the any letter from lowercase to
+	uppercase
+ */
+
+
+#include<stdio.h>
+char lowerToUppercase(char c);
+void main(){
+	char a='z';
+	char z;
+	z=lowerToUppercase(a);
+
+}
+
+char lowerToUppercase(char c){
+	if((c>=97) && (c<=122)){
+		printf("The Upper case of ( %c ) is ( %c )\n",c,(c-32));
+		c=c-32;
+	}
+	else{
+		printf("this is not a character\n");
+	}
+
+	return c;
+}

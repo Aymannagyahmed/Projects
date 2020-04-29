@@ -1,0 +1,33 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  C function that use the bubble sort algorithm to sort
+ *  an integer array in ascending order
+ */
+#include<stdio.h>
+#define sizee 5
+void ascendingBubbleSort(int arr[],int size);
+void main(void){
+	int i;
+	int arr[sizee]={5,5,6,2,3};
+	ascendingBubbleSort(arr,sizee);
+	for(i=0;i<sizee;i++){
+		printf("%d ",arr[i]);
+	}
+}
+void ascendingBubbleSort(int arr[],int size){
+	int i;
+	int j;
+	int temp;
+	for(i=0;i<size;i++){
+		for(j=(i+1);j<size;j++){
+			if( arr[i] > arr[j] ){
+				temp=arr[i];
+				arr[i]=arr[j];
+				arr[j]=temp;
+			}
+		}
+	}
+}

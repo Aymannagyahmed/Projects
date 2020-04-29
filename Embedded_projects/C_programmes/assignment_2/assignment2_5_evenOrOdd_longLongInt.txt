@@ -1,0 +1,33 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C function to check if the input is an even number or an odd
+	number, if even number return 0 if odd number return 1.
+ */
+
+#include<stdio.h>
+long long int evenOrOdd(long long int num);
+void main(){
+	long long int x=5;
+	long long int y=10;
+	y=evenOrOdd(x);
+	printf("%I64d\n",y);
+}
+
+
+long long int evenOrOdd(long long int num){
+	long long int mask= 0x00000001;
+	if(mask & num){
+		printf("num is odd\n");
+		return 1;
+	}
+	else{
+		printf("num is even\n");
+		return 0;
+	}
+
+	//return ( (mask & num)?0:1 );
+}
+

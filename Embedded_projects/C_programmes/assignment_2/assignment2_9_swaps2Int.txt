@@ -1,0 +1,26 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that swaps the value of two integer numbers
+ */
+
+
+#include<stdio.h>
+
+void swaps2Int(int* firestNum,int* secondNum);
+void main(){
+	int fnum=5;
+	int snum=9;
+	printf("befor swapping firestNum is ( %d ) and the secondNum is ( %d )\n",fnum,snum);
+	swaps2Int(&fnum,&snum);
+	printf("befor swapping firestNum is ( %d ) and the secondNum is ( %d )\n",fnum,snum);
+}
+
+void swaps2Int(int* firestNum,int* secondNum){
+	int temp;
+	temp= *firestNum;
+	*firestNum= *secondNum;
+	*secondNum = temp;
+}

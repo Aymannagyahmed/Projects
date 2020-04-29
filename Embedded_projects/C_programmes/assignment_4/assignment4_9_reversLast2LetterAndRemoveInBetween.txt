@@ -1,0 +1,50 @@
+/*
+ * assignment_4_9.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  Given a string, create a new string made up of its last
+ *  two letters, reversed and separated by a space, the word
+ *  is “bat”. Return string contains ”t a”
+ */
+#include<stdio.h>
+#define sizee 50
+char* reversLast2LetterAndRemoveInBetween(char str[]);
+char retarray[sizee];
+void main(void){
+	char strn[sizee]="abcd";
+	printf("%s",reversLast2LetterAndRemoveInBetween(strn));
+/*
+	char* test=NULL;
+	test=reversLast2LetterAndRemoveInBetween(strn);
+	printf("%c",*(test+0));
+*/
+}
+char* reversLast2LetterAndRemoveInBetween(char str[]){
+	char* newstr=str;
+	while(*newstr!='\0'){
+		newstr++;
+	}
+	/*decremnt the pointer*/
+	newstr--;
+	*(retarray+0)=*newstr;
+	*(retarray+1)=' ';
+	newstr--;
+	*(retarray+2)=*newstr;
+	*(retarray+3)='\0';
+	return retarray;
+}
+/*
+char* reversLast2LetterAndRemoveInBetween(char str[]){
+	int i=0;
+	static char* newstr=NULL;
+	while(*newstr!='\0'){
+		i++;
+	}
+	*(newstr+0)=str[i-1];
+	*(newstr+1)=' ';
+	*(newstr+2)=str[i-2];
+	*(newstr+3)='\0';
+	return newstr;
+}
+*/

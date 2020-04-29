@@ -1,0 +1,27 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that reads two integers and checks if the first is
+	multiple of the second.
+ */
+
+
+#include<stdio.h>
+void isMultiple(long long int firestNum,int secondNum);
+void main(){
+	int num=5;
+	long long int fnum=500;
+	isMultiple(fnum,num);
+	
+}
+
+void isMultiple(long long int firestNum,int secondNum){
+	if(!(firestNum%secondNum)){
+		printf("( %I64d ) is multiple of ( %d) \n",firestNum,secondNum);
+	}
+	else{
+		printf("( %I64d ) is NOT multiple of ( %d )\n",firestNum,secondNum);
+	}
+}

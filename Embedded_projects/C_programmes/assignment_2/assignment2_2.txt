@@ -1,0 +1,26 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that takes one character and checks if it alphabet
+	or not.
+ */
+
+#include<stdio.h>
+void checkAlpha(char c);
+
+void main(void){
+	char c='0';
+	checkAlpha(c);
+
+}
+
+void checkAlpha(char c){
+	if((c>=65) && (c<=122)){
+		printf("(%c) It is an alphabet\n",c);
+	}
+	else{
+		printf("(%c)It is not alphabet\n",c);
+	}
+}

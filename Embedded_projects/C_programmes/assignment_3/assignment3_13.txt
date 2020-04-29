@@ -1,0 +1,33 @@
+/*
+ * assignment3_13.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  function to remove all characters in a string expect alphabet.
+ */
+#include<stdio.h>
+#define sizee 500
+char spase='1';
+
+void removeSimpoles(char str[]);
+void main(void){
+
+	char strn[sizee]="abc1@#$";
+	printf("%s \n",strn);
+
+	removeSimpoles(strn);
+	printf("%s \n",strn);
+
+}
+
+void removeSimpoles(char str[]){
+	int i;
+	int j;
+	for(i=0;str[i]!='\0';i++){
+		while( !(((str[i]>='a')&&(str[i]<='z')) || ((str[i]>='A')&&(str[i]<='Z'))) && (str[i]!='\0')){
+			for(j=i;str[j]!='\0';j++){
+				str[j]=str[j+1];
+			}
+		}
+	}
+}

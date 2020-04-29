@@ -1,0 +1,29 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *   C function to return the index of FIRST occurrence of a
+ *   number in a given array. Array index start from 0. If the item is not
+ *   in the list return -1. (Linear Search Algorithm)
+ */
+#include<stdio.h>
+#define sizee 5
+#define notFound -1
+#define sNum 55
+int firstOccurrenceOfNumber(int arr[],int size,int num);
+void main(void){
+	int arr[sizee]={1,2,55,4,6};
+	int ret;
+	ret=firstOccurrenceOfNumber(arr,sizee,sNum);
+	printf("ret is %d\n",ret);
+}
+int firstOccurrenceOfNumber(int arr[],int size,int num){
+	int i;
+	for(i=0;i<size;i++){
+		if(arr[i]==num){
+			return i;
+		}
+	}
+	return notFound;
+}

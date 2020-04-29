@@ -1,0 +1,32 @@
+/*
+ * assignment_4_8.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *   C function to swap the contents of two arrays
+ *   with the same length using pointers.
+ */
+#include<stdio.h>
+#define sizee 7
+void swapBitwise(int* fNum,int* sNum);
+void swap2Arr(int* arr1,int* arr2,int size);
+void main(void){
+	int i;
+	int array1[sizee]={22,33,44,55,66,77,88};
+	int array2[sizee]={2,3,4,5,6,7,8};
+	swap2Arr(array1,array2,sizee);
+	for(i=0;i<sizee;i++){
+		printf("%d ",*(array1+i));
+	}
+}
+void swap2Arr(int* arr1,int* arr2,int size){
+	int i;
+	for(i=0;i<size;i++){
+		swapBitwise((arr1+i),(arr2+i));
+	}
+}
+void swapBitwise(int* fNum,int* sNum){
+	*fNum=*fNum^*sNum;
+	*sNum=*fNum^*sNum;
+	*fNum=*fNum^*sNum;
+}

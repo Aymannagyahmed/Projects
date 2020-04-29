@@ -1,0 +1,12 @@
+Using FreeRTOS
+test on xTaskGetTickCount(), xQueueReceive(), xQueueSend().
+
+task1:
+1.Creat the Queue.
+2.puts data in Queue using xQueueSend().
+3.while task1 puts data LED on PINB0 is on.
+4.then Suspend it self using vTaskSuspend().
+5.when task1 in Suspend state LED on PINB0 is of & LED on PINB2 is on.
+
+task2:
+1.take data from Queue using xQueueReceive().

@@ -1,0 +1,603 @@
+
+ISR_TEST1.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         000003ae  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .stab         0000072c  00000000  00000000  00000404  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  2 .stabstr      00000867  00000000  00000000  00000b30  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 bb 01 	jmp	0x376	; 0x376 <__vector_1>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 ac 01 	call	0x358	; 0x358 <main>
+  64:	0c 94 d5 01 	jmp	0x3aa	; 0x3aa <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <EX_ISR_ENABLE>:
+ *      Author: AymanW
+ */
+#include "ex_interrupt.h"
+
+void EX_ISR_ENABLE(ex_isr_surse_t isr_surce)
+{
+  6c:	df 93       	push	r29
+  6e:	cf 93       	push	r28
+  70:	00 d0       	rcall	.+0      	; 0x72 <EX_ISR_ENABLE+0x6>
+  72:	0f 92       	push	r0
+  74:	cd b7       	in	r28, 0x3d	; 61
+  76:	de b7       	in	r29, 0x3e	; 62
+  78:	89 83       	std	Y+1, r24	; 0x01
+	switch(isr_surce)
+  7a:	89 81       	ldd	r24, Y+1	; 0x01
+  7c:	28 2f       	mov	r18, r24
+  7e:	30 e0       	ldi	r19, 0x00	; 0
+  80:	3b 83       	std	Y+3, r19	; 0x03
+  82:	2a 83       	std	Y+2, r18	; 0x02
+  84:	8a 81       	ldd	r24, Y+2	; 0x02
+  86:	9b 81       	ldd	r25, Y+3	; 0x03
+  88:	81 30       	cpi	r24, 0x01	; 1
+  8a:	91 05       	cpc	r25, r1
+  8c:	89 f0       	breq	.+34     	; 0xb0 <EX_ISR_ENABLE+0x44>
+  8e:	2a 81       	ldd	r18, Y+2	; 0x02
+  90:	3b 81       	ldd	r19, Y+3	; 0x03
+  92:	22 30       	cpi	r18, 0x02	; 2
+  94:	31 05       	cpc	r19, r1
+  96:	a1 f0       	breq	.+40     	; 0xc0 <EX_ISR_ENABLE+0x54>
+  98:	8a 81       	ldd	r24, Y+2	; 0x02
+  9a:	9b 81       	ldd	r25, Y+3	; 0x03
+  9c:	00 97       	sbiw	r24, 0x00	; 0
+  9e:	b9 f4       	brne	.+46     	; 0xce <EX_ISR_ENABLE+0x62>
+	{
+		case ex_int0:
+			SET_BIT(GICR,INT0);
+  a0:	ab e5       	ldi	r26, 0x5B	; 91
+  a2:	b0 e0       	ldi	r27, 0x00	; 0
+  a4:	eb e5       	ldi	r30, 0x5B	; 91
+  a6:	f0 e0       	ldi	r31, 0x00	; 0
+  a8:	80 81       	ld	r24, Z
+  aa:	80 64       	ori	r24, 0x40	; 64
+  ac:	8c 93       	st	X, r24
+  ae:	0f c0       	rjmp	.+30     	; 0xce <EX_ISR_ENABLE+0x62>
+			break;
+		case ex_int1:
+			SET_BIT(GICR,INT1);
+  b0:	ab e5       	ldi	r26, 0x5B	; 91
+  b2:	b0 e0       	ldi	r27, 0x00	; 0
+  b4:	eb e5       	ldi	r30, 0x5B	; 91
+  b6:	f0 e0       	ldi	r31, 0x00	; 0
+  b8:	80 81       	ld	r24, Z
+  ba:	80 68       	ori	r24, 0x80	; 128
+  bc:	8c 93       	st	X, r24
+  be:	07 c0       	rjmp	.+14     	; 0xce <EX_ISR_ENABLE+0x62>
+			break;
+		case ex_int2:
+			SET_BIT(GICR,INT2);
+  c0:	ab e5       	ldi	r26, 0x5B	; 91
+  c2:	b0 e0       	ldi	r27, 0x00	; 0
+  c4:	eb e5       	ldi	r30, 0x5B	; 91
+  c6:	f0 e0       	ldi	r31, 0x00	; 0
+  c8:	80 81       	ld	r24, Z
+  ca:	80 62       	ori	r24, 0x20	; 32
+  cc:	8c 93       	st	X, r24
+			break;
+		default:
+			break;
+	}
+}
+  ce:	0f 90       	pop	r0
+  d0:	0f 90       	pop	r0
+  d2:	0f 90       	pop	r0
+  d4:	cf 91       	pop	r28
+  d6:	df 91       	pop	r29
+  d8:	08 95       	ret
+
+000000da <EX_ISR_DISABLE>:
+void EX_ISR_DISABLE(ex_isr_surse_t isr_surce)
+{
+  da:	df 93       	push	r29
+  dc:	cf 93       	push	r28
+  de:	00 d0       	rcall	.+0      	; 0xe0 <EX_ISR_DISABLE+0x6>
+  e0:	0f 92       	push	r0
+  e2:	cd b7       	in	r28, 0x3d	; 61
+  e4:	de b7       	in	r29, 0x3e	; 62
+  e6:	89 83       	std	Y+1, r24	; 0x01
+	switch(isr_surce)
+  e8:	89 81       	ldd	r24, Y+1	; 0x01
+  ea:	28 2f       	mov	r18, r24
+  ec:	30 e0       	ldi	r19, 0x00	; 0
+  ee:	3b 83       	std	Y+3, r19	; 0x03
+  f0:	2a 83       	std	Y+2, r18	; 0x02
+  f2:	8a 81       	ldd	r24, Y+2	; 0x02
+  f4:	9b 81       	ldd	r25, Y+3	; 0x03
+  f6:	81 30       	cpi	r24, 0x01	; 1
+  f8:	91 05       	cpc	r25, r1
+  fa:	89 f0       	breq	.+34     	; 0x11e <EX_ISR_DISABLE+0x44>
+  fc:	2a 81       	ldd	r18, Y+2	; 0x02
+  fe:	3b 81       	ldd	r19, Y+3	; 0x03
+ 100:	22 30       	cpi	r18, 0x02	; 2
+ 102:	31 05       	cpc	r19, r1
+ 104:	a1 f0       	breq	.+40     	; 0x12e <EX_ISR_DISABLE+0x54>
+ 106:	8a 81       	ldd	r24, Y+2	; 0x02
+ 108:	9b 81       	ldd	r25, Y+3	; 0x03
+ 10a:	00 97       	sbiw	r24, 0x00	; 0
+ 10c:	b9 f4       	brne	.+46     	; 0x13c <EX_ISR_DISABLE+0x62>
+	{
+		case ex_int0:
+			CLEAR_BIT(GICR,INT0);
+ 10e:	ab e5       	ldi	r26, 0x5B	; 91
+ 110:	b0 e0       	ldi	r27, 0x00	; 0
+ 112:	eb e5       	ldi	r30, 0x5B	; 91
+ 114:	f0 e0       	ldi	r31, 0x00	; 0
+ 116:	80 81       	ld	r24, Z
+ 118:	8f 7b       	andi	r24, 0xBF	; 191
+ 11a:	8c 93       	st	X, r24
+ 11c:	0f c0       	rjmp	.+30     	; 0x13c <EX_ISR_DISABLE+0x62>
+			break;
+		case ex_int1:
+			CLEAR_BIT(GICR,INT1);
+ 11e:	ab e5       	ldi	r26, 0x5B	; 91
+ 120:	b0 e0       	ldi	r27, 0x00	; 0
+ 122:	eb e5       	ldi	r30, 0x5B	; 91
+ 124:	f0 e0       	ldi	r31, 0x00	; 0
+ 126:	80 81       	ld	r24, Z
+ 128:	8f 77       	andi	r24, 0x7F	; 127
+ 12a:	8c 93       	st	X, r24
+ 12c:	07 c0       	rjmp	.+14     	; 0x13c <EX_ISR_DISABLE+0x62>
+			break;
+		case ex_int2:
+			CLEAR_BIT(GICR,INT2);
+ 12e:	ab e5       	ldi	r26, 0x5B	; 91
+ 130:	b0 e0       	ldi	r27, 0x00	; 0
+ 132:	eb e5       	ldi	r30, 0x5B	; 91
+ 134:	f0 e0       	ldi	r31, 0x00	; 0
+ 136:	80 81       	ld	r24, Z
+ 138:	8f 7d       	andi	r24, 0xDF	; 223
+ 13a:	8c 93       	st	X, r24
+			break;
+		default:
+			break;
+	}
+}
+ 13c:	0f 90       	pop	r0
+ 13e:	0f 90       	pop	r0
+ 140:	0f 90       	pop	r0
+ 142:	cf 91       	pop	r28
+ 144:	df 91       	pop	r29
+ 146:	08 95       	ret
+
+00000148 <EX_ISR_TRIGGER_EDGE>:
+void EX_ISR_TRIGGER_EDGE(ex_isr_surse_t isr_surce,trigger_edge_t edge)
+{
+ 148:	df 93       	push	r29
+ 14a:	cf 93       	push	r28
+ 14c:	cd b7       	in	r28, 0x3d	; 61
+ 14e:	de b7       	in	r29, 0x3e	; 62
+ 150:	2a 97       	sbiw	r28, 0x0a	; 10
+ 152:	0f b6       	in	r0, 0x3f	; 63
+ 154:	f8 94       	cli
+ 156:	de bf       	out	0x3e, r29	; 62
+ 158:	0f be       	out	0x3f, r0	; 63
+ 15a:	cd bf       	out	0x3d, r28	; 61
+ 15c:	89 83       	std	Y+1, r24	; 0x01
+ 15e:	6a 83       	std	Y+2, r22	; 0x02
+	switch(isr_surce)
+ 160:	89 81       	ldd	r24, Y+1	; 0x01
+ 162:	28 2f       	mov	r18, r24
+ 164:	30 e0       	ldi	r19, 0x00	; 0
+ 166:	3a 87       	std	Y+10, r19	; 0x0a
+ 168:	29 87       	std	Y+9, r18	; 0x09
+ 16a:	89 85       	ldd	r24, Y+9	; 0x09
+ 16c:	9a 85       	ldd	r25, Y+10	; 0x0a
+ 16e:	81 30       	cpi	r24, 0x01	; 1
+ 170:	91 05       	cpc	r25, r1
+ 172:	09 f4       	brne	.+2      	; 0x176 <EX_ISR_TRIGGER_EDGE+0x2e>
+ 174:	66 c0       	rjmp	.+204    	; 0x242 <EX_ISR_TRIGGER_EDGE+0xfa>
+ 176:	29 85       	ldd	r18, Y+9	; 0x09
+ 178:	3a 85       	ldd	r19, Y+10	; 0x0a
+ 17a:	22 30       	cpi	r18, 0x02	; 2
+ 17c:	31 05       	cpc	r19, r1
+ 17e:	09 f4       	brne	.+2      	; 0x182 <EX_ISR_TRIGGER_EDGE+0x3a>
+ 180:	bb c0       	rjmp	.+374    	; 0x2f8 <EX_ISR_TRIGGER_EDGE+0x1b0>
+ 182:	89 85       	ldd	r24, Y+9	; 0x09
+ 184:	9a 85       	ldd	r25, Y+10	; 0x0a
+ 186:	00 97       	sbiw	r24, 0x00	; 0
+ 188:	09 f0       	breq	.+2      	; 0x18c <EX_ISR_TRIGGER_EDGE+0x44>
+ 18a:	dd c0       	rjmp	.+442    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+	{
+		case ex_int0:
+			switch(edge)
+ 18c:	8a 81       	ldd	r24, Y+2	; 0x02
+ 18e:	28 2f       	mov	r18, r24
+ 190:	30 e0       	ldi	r19, 0x00	; 0
+ 192:	38 87       	std	Y+8, r19	; 0x08
+ 194:	2f 83       	std	Y+7, r18	; 0x07
+ 196:	8f 81       	ldd	r24, Y+7	; 0x07
+ 198:	98 85       	ldd	r25, Y+8	; 0x08
+ 19a:	81 30       	cpi	r24, 0x01	; 1
+ 19c:	91 05       	cpc	r25, r1
+ 19e:	21 f1       	breq	.+72     	; 0x1e8 <EX_ISR_TRIGGER_EDGE+0xa0>
+ 1a0:	2f 81       	ldd	r18, Y+7	; 0x07
+ 1a2:	38 85       	ldd	r19, Y+8	; 0x08
+ 1a4:	22 30       	cpi	r18, 0x02	; 2
+ 1a6:	31 05       	cpc	r19, r1
+ 1a8:	2c f4       	brge	.+10     	; 0x1b4 <EX_ISR_TRIGGER_EDGE+0x6c>
+ 1aa:	8f 81       	ldd	r24, Y+7	; 0x07
+ 1ac:	98 85       	ldd	r25, Y+8	; 0x08
+ 1ae:	00 97       	sbiw	r24, 0x00	; 0
+ 1b0:	61 f0       	breq	.+24     	; 0x1ca <EX_ISR_TRIGGER_EDGE+0x82>
+ 1b2:	c9 c0       	rjmp	.+402    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+ 1b4:	2f 81       	ldd	r18, Y+7	; 0x07
+ 1b6:	38 85       	ldd	r19, Y+8	; 0x08
+ 1b8:	22 30       	cpi	r18, 0x02	; 2
+ 1ba:	31 05       	cpc	r19, r1
+ 1bc:	21 f1       	breq	.+72     	; 0x206 <EX_ISR_TRIGGER_EDGE+0xbe>
+ 1be:	8f 81       	ldd	r24, Y+7	; 0x07
+ 1c0:	98 85       	ldd	r25, Y+8	; 0x08
+ 1c2:	83 30       	cpi	r24, 0x03	; 3
+ 1c4:	91 05       	cpc	r25, r1
+ 1c6:	71 f1       	breq	.+92     	; 0x224 <EX_ISR_TRIGGER_EDGE+0xdc>
+ 1c8:	be c0       	rjmp	.+380    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+			{
+				case low_level:
+					CLEAR_BIT(MCUCR,ISC00);
+ 1ca:	a5 e5       	ldi	r26, 0x55	; 85
+ 1cc:	b0 e0       	ldi	r27, 0x00	; 0
+ 1ce:	e5 e5       	ldi	r30, 0x55	; 85
+ 1d0:	f0 e0       	ldi	r31, 0x00	; 0
+ 1d2:	80 81       	ld	r24, Z
+ 1d4:	8e 7f       	andi	r24, 0xFE	; 254
+ 1d6:	8c 93       	st	X, r24
+					CLEAR_BIT(MCUCR,ISC01);
+ 1d8:	a5 e5       	ldi	r26, 0x55	; 85
+ 1da:	b0 e0       	ldi	r27, 0x00	; 0
+ 1dc:	e5 e5       	ldi	r30, 0x55	; 85
+ 1de:	f0 e0       	ldi	r31, 0x00	; 0
+ 1e0:	80 81       	ld	r24, Z
+ 1e2:	8d 7f       	andi	r24, 0xFD	; 253
+ 1e4:	8c 93       	st	X, r24
+ 1e6:	af c0       	rjmp	.+350    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case any_logic_change:
+					SET_BIT(MCUCR,ISC00);
+ 1e8:	a5 e5       	ldi	r26, 0x55	; 85
+ 1ea:	b0 e0       	ldi	r27, 0x00	; 0
+ 1ec:	e5 e5       	ldi	r30, 0x55	; 85
+ 1ee:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f0:	80 81       	ld	r24, Z
+ 1f2:	81 60       	ori	r24, 0x01	; 1
+ 1f4:	8c 93       	st	X, r24
+					CLEAR_BIT(MCUCR,ISC01);
+ 1f6:	a5 e5       	ldi	r26, 0x55	; 85
+ 1f8:	b0 e0       	ldi	r27, 0x00	; 0
+ 1fa:	e5 e5       	ldi	r30, 0x55	; 85
+ 1fc:	f0 e0       	ldi	r31, 0x00	; 0
+ 1fe:	80 81       	ld	r24, Z
+ 200:	8d 7f       	andi	r24, 0xFD	; 253
+ 202:	8c 93       	st	X, r24
+ 204:	a0 c0       	rjmp	.+320    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case faling_edge:
+					CLEAR_BIT(MCUCR,ISC00);
+ 206:	a5 e5       	ldi	r26, 0x55	; 85
+ 208:	b0 e0       	ldi	r27, 0x00	; 0
+ 20a:	e5 e5       	ldi	r30, 0x55	; 85
+ 20c:	f0 e0       	ldi	r31, 0x00	; 0
+ 20e:	80 81       	ld	r24, Z
+ 210:	8e 7f       	andi	r24, 0xFE	; 254
+ 212:	8c 93       	st	X, r24
+					SET_BIT(MCUCR,ISC01);
+ 214:	a5 e5       	ldi	r26, 0x55	; 85
+ 216:	b0 e0       	ldi	r27, 0x00	; 0
+ 218:	e5 e5       	ldi	r30, 0x55	; 85
+ 21a:	f0 e0       	ldi	r31, 0x00	; 0
+ 21c:	80 81       	ld	r24, Z
+ 21e:	82 60       	ori	r24, 0x02	; 2
+ 220:	8c 93       	st	X, r24
+ 222:	91 c0       	rjmp	.+290    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case rising_edge:
+					SET_BIT(MCUCR,ISC00);
+ 224:	a5 e5       	ldi	r26, 0x55	; 85
+ 226:	b0 e0       	ldi	r27, 0x00	; 0
+ 228:	e5 e5       	ldi	r30, 0x55	; 85
+ 22a:	f0 e0       	ldi	r31, 0x00	; 0
+ 22c:	80 81       	ld	r24, Z
+ 22e:	81 60       	ori	r24, 0x01	; 1
+ 230:	8c 93       	st	X, r24
+					SET_BIT(MCUCR,ISC01);
+ 232:	a5 e5       	ldi	r26, 0x55	; 85
+ 234:	b0 e0       	ldi	r27, 0x00	; 0
+ 236:	e5 e5       	ldi	r30, 0x55	; 85
+ 238:	f0 e0       	ldi	r31, 0x00	; 0
+ 23a:	80 81       	ld	r24, Z
+ 23c:	82 60       	ori	r24, 0x02	; 2
+ 23e:	8c 93       	st	X, r24
+ 240:	82 c0       	rjmp	.+260    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+			}
+			break;
+
+		case ex_int1:
+			switch(edge)
+ 242:	8a 81       	ldd	r24, Y+2	; 0x02
+ 244:	28 2f       	mov	r18, r24
+ 246:	30 e0       	ldi	r19, 0x00	; 0
+ 248:	3e 83       	std	Y+6, r19	; 0x06
+ 24a:	2d 83       	std	Y+5, r18	; 0x05
+ 24c:	8d 81       	ldd	r24, Y+5	; 0x05
+ 24e:	9e 81       	ldd	r25, Y+6	; 0x06
+ 250:	81 30       	cpi	r24, 0x01	; 1
+ 252:	91 05       	cpc	r25, r1
+ 254:	21 f1       	breq	.+72     	; 0x29e <EX_ISR_TRIGGER_EDGE+0x156>
+ 256:	2d 81       	ldd	r18, Y+5	; 0x05
+ 258:	3e 81       	ldd	r19, Y+6	; 0x06
+ 25a:	22 30       	cpi	r18, 0x02	; 2
+ 25c:	31 05       	cpc	r19, r1
+ 25e:	2c f4       	brge	.+10     	; 0x26a <EX_ISR_TRIGGER_EDGE+0x122>
+ 260:	8d 81       	ldd	r24, Y+5	; 0x05
+ 262:	9e 81       	ldd	r25, Y+6	; 0x06
+ 264:	00 97       	sbiw	r24, 0x00	; 0
+ 266:	61 f0       	breq	.+24     	; 0x280 <EX_ISR_TRIGGER_EDGE+0x138>
+ 268:	6e c0       	rjmp	.+220    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+ 26a:	2d 81       	ldd	r18, Y+5	; 0x05
+ 26c:	3e 81       	ldd	r19, Y+6	; 0x06
+ 26e:	22 30       	cpi	r18, 0x02	; 2
+ 270:	31 05       	cpc	r19, r1
+ 272:	21 f1       	breq	.+72     	; 0x2bc <EX_ISR_TRIGGER_EDGE+0x174>
+ 274:	8d 81       	ldd	r24, Y+5	; 0x05
+ 276:	9e 81       	ldd	r25, Y+6	; 0x06
+ 278:	83 30       	cpi	r24, 0x03	; 3
+ 27a:	91 05       	cpc	r25, r1
+ 27c:	71 f1       	breq	.+92     	; 0x2da <EX_ISR_TRIGGER_EDGE+0x192>
+ 27e:	63 c0       	rjmp	.+198    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+			{
+				case low_level:
+					CLEAR_BIT(MCUCR,ISC10);
+ 280:	a5 e5       	ldi	r26, 0x55	; 85
+ 282:	b0 e0       	ldi	r27, 0x00	; 0
+ 284:	e5 e5       	ldi	r30, 0x55	; 85
+ 286:	f0 e0       	ldi	r31, 0x00	; 0
+ 288:	80 81       	ld	r24, Z
+ 28a:	8b 7f       	andi	r24, 0xFB	; 251
+ 28c:	8c 93       	st	X, r24
+					CLEAR_BIT(MCUCR,ISC11);
+ 28e:	a5 e5       	ldi	r26, 0x55	; 85
+ 290:	b0 e0       	ldi	r27, 0x00	; 0
+ 292:	e5 e5       	ldi	r30, 0x55	; 85
+ 294:	f0 e0       	ldi	r31, 0x00	; 0
+ 296:	80 81       	ld	r24, Z
+ 298:	87 7f       	andi	r24, 0xF7	; 247
+ 29a:	8c 93       	st	X, r24
+ 29c:	54 c0       	rjmp	.+168    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case any_logic_change:
+					SET_BIT(MCUCR,ISC10);
+ 29e:	a5 e5       	ldi	r26, 0x55	; 85
+ 2a0:	b0 e0       	ldi	r27, 0x00	; 0
+ 2a2:	e5 e5       	ldi	r30, 0x55	; 85
+ 2a4:	f0 e0       	ldi	r31, 0x00	; 0
+ 2a6:	80 81       	ld	r24, Z
+ 2a8:	84 60       	ori	r24, 0x04	; 4
+ 2aa:	8c 93       	st	X, r24
+					CLEAR_BIT(MCUCR,ISC11);
+ 2ac:	a5 e5       	ldi	r26, 0x55	; 85
+ 2ae:	b0 e0       	ldi	r27, 0x00	; 0
+ 2b0:	e5 e5       	ldi	r30, 0x55	; 85
+ 2b2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2b4:	80 81       	ld	r24, Z
+ 2b6:	87 7f       	andi	r24, 0xF7	; 247
+ 2b8:	8c 93       	st	X, r24
+ 2ba:	45 c0       	rjmp	.+138    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case faling_edge:
+					CLEAR_BIT(MCUCR,ISC10);
+ 2bc:	a5 e5       	ldi	r26, 0x55	; 85
+ 2be:	b0 e0       	ldi	r27, 0x00	; 0
+ 2c0:	e5 e5       	ldi	r30, 0x55	; 85
+ 2c2:	f0 e0       	ldi	r31, 0x00	; 0
+ 2c4:	80 81       	ld	r24, Z
+ 2c6:	8b 7f       	andi	r24, 0xFB	; 251
+ 2c8:	8c 93       	st	X, r24
+					SET_BIT(MCUCR,ISC11);
+ 2ca:	a5 e5       	ldi	r26, 0x55	; 85
+ 2cc:	b0 e0       	ldi	r27, 0x00	; 0
+ 2ce:	e5 e5       	ldi	r30, 0x55	; 85
+ 2d0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2d2:	80 81       	ld	r24, Z
+ 2d4:	88 60       	ori	r24, 0x08	; 8
+ 2d6:	8c 93       	st	X, r24
+ 2d8:	36 c0       	rjmp	.+108    	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case rising_edge:
+					SET_BIT(MCUCR,ISC10);
+ 2da:	a5 e5       	ldi	r26, 0x55	; 85
+ 2dc:	b0 e0       	ldi	r27, 0x00	; 0
+ 2de:	e5 e5       	ldi	r30, 0x55	; 85
+ 2e0:	f0 e0       	ldi	r31, 0x00	; 0
+ 2e2:	80 81       	ld	r24, Z
+ 2e4:	84 60       	ori	r24, 0x04	; 4
+ 2e6:	8c 93       	st	X, r24
+					SET_BIT(MCUCR,ISC11);
+ 2e8:	a5 e5       	ldi	r26, 0x55	; 85
+ 2ea:	b0 e0       	ldi	r27, 0x00	; 0
+ 2ec:	e5 e5       	ldi	r30, 0x55	; 85
+ 2ee:	f0 e0       	ldi	r31, 0x00	; 0
+ 2f0:	80 81       	ld	r24, Z
+ 2f2:	88 60       	ori	r24, 0x08	; 8
+ 2f4:	8c 93       	st	X, r24
+ 2f6:	27 c0       	rjmp	.+78     	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+			}
+			break;
+
+		case ex_int2:
+			switch(edge)
+ 2f8:	8a 81       	ldd	r24, Y+2	; 0x02
+ 2fa:	28 2f       	mov	r18, r24
+ 2fc:	30 e0       	ldi	r19, 0x00	; 0
+ 2fe:	3c 83       	std	Y+4, r19	; 0x04
+ 300:	2b 83       	std	Y+3, r18	; 0x03
+ 302:	8b 81       	ldd	r24, Y+3	; 0x03
+ 304:	9c 81       	ldd	r25, Y+4	; 0x04
+ 306:	82 30       	cpi	r24, 0x02	; 2
+ 308:	91 05       	cpc	r25, r1
+ 30a:	31 f0       	breq	.+12     	; 0x318 <EX_ISR_TRIGGER_EDGE+0x1d0>
+ 30c:	2b 81       	ldd	r18, Y+3	; 0x03
+ 30e:	3c 81       	ldd	r19, Y+4	; 0x04
+ 310:	23 30       	cpi	r18, 0x03	; 3
+ 312:	31 05       	cpc	r19, r1
+ 314:	49 f0       	breq	.+18     	; 0x328 <EX_ISR_TRIGGER_EDGE+0x1e0>
+ 316:	10 c0       	rjmp	.+32     	; 0x338 <EX_ISR_TRIGGER_EDGE+0x1f0>
+			{
+				case faling_edge:
+					CLEAR_BIT(MCUCR,ISC2);
+ 318:	a5 e5       	ldi	r26, 0x55	; 85
+ 31a:	b0 e0       	ldi	r27, 0x00	; 0
+ 31c:	e5 e5       	ldi	r30, 0x55	; 85
+ 31e:	f0 e0       	ldi	r31, 0x00	; 0
+ 320:	80 81       	ld	r24, Z
+ 322:	8f 7b       	andi	r24, 0xBF	; 191
+ 324:	8c 93       	st	X, r24
+ 326:	0f c0       	rjmp	.+30     	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				case rising_edge:
+					SET_BIT(MCUCR,ISC2);
+ 328:	a5 e5       	ldi	r26, 0x55	; 85
+ 32a:	b0 e0       	ldi	r27, 0x00	; 0
+ 32c:	e5 e5       	ldi	r30, 0x55	; 85
+ 32e:	f0 e0       	ldi	r31, 0x00	; 0
+ 330:	80 81       	ld	r24, Z
+ 332:	80 64       	ori	r24, 0x40	; 64
+ 334:	8c 93       	st	X, r24
+ 336:	07 c0       	rjmp	.+14     	; 0x346 <EX_ISR_TRIGGER_EDGE+0x1fe>
+					break;
+				default:
+					CLEAR_BIT(MCUCR,ISC2);
+ 338:	a5 e5       	ldi	r26, 0x55	; 85
+ 33a:	b0 e0       	ldi	r27, 0x00	; 0
+ 33c:	e5 e5       	ldi	r30, 0x55	; 85
+ 33e:	f0 e0       	ldi	r31, 0x00	; 0
+ 340:	80 81       	ld	r24, Z
+ 342:	8f 7b       	andi	r24, 0xBF	; 191
+ 344:	8c 93       	st	X, r24
+			}
+			break;
+		default:
+			break;
+	}
+}
+ 346:	2a 96       	adiw	r28, 0x0a	; 10
+ 348:	0f b6       	in	r0, 0x3f	; 63
+ 34a:	f8 94       	cli
+ 34c:	de bf       	out	0x3e, r29	; 62
+ 34e:	0f be       	out	0x3f, r0	; 63
+ 350:	cd bf       	out	0x3d, r28	; 61
+ 352:	cf 91       	pop	r28
+ 354:	df 91       	pop	r29
+ 356:	08 95       	ret
+
+00000358 <main>:
+ */
+
+#include "ex_interrupt.h"
+
+void main(void)
+{
+ 358:	df 93       	push	r29
+ 35a:	cf 93       	push	r28
+ 35c:	cd b7       	in	r28, 0x3d	; 61
+ 35e:	de b7       	in	r29, 0x3e	; 62
+	/*gpio init*/
+
+
+	//Enable global ISR
+	sei();
+ 360:	78 94       	sei
+	//which ISR do you want and when it will happen
+	EX_ISR_TRIGGER_EDGE(ex_int0,rising_edge);
+ 362:	80 e0       	ldi	r24, 0x00	; 0
+ 364:	63 e0       	ldi	r22, 0x03	; 3
+ 366:	0e 94 a4 00 	call	0x148	; 0x148 <EX_ISR_TRIGGER_EDGE>
+	EX_ISR_ENABLE(ex_int0);
+ 36a:	80 e0       	ldi	r24, 0x00	; 0
+ 36c:	0e 94 36 00 	call	0x6c	; 0x6c <EX_ISR_ENABLE>
+
+}
+ 370:	cf 91       	pop	r28
+ 372:	df 91       	pop	r29
+ 374:	08 95       	ret
+
+00000376 <__vector_1>:
+
+
+ISR(INT0_vect)
+{
+ 376:	1f 92       	push	r1
+ 378:	0f 92       	push	r0
+ 37a:	0f b6       	in	r0, 0x3f	; 63
+ 37c:	0f 92       	push	r0
+ 37e:	11 24       	eor	r1, r1
+ 380:	8f 93       	push	r24
+ 382:	ef 93       	push	r30
+ 384:	ff 93       	push	r31
+ 386:	df 93       	push	r29
+ 388:	cf 93       	push	r28
+ 38a:	cd b7       	in	r28, 0x3d	; 61
+ 38c:	de b7       	in	r29, 0x3e	; 62
+	DDRA=0xff;
+ 38e:	ea e3       	ldi	r30, 0x3A	; 58
+ 390:	f0 e0       	ldi	r31, 0x00	; 0
+ 392:	8f ef       	ldi	r24, 0xFF	; 255
+ 394:	80 83       	st	Z, r24
+}
+ 396:	cf 91       	pop	r28
+ 398:	df 91       	pop	r29
+ 39a:	ff 91       	pop	r31
+ 39c:	ef 91       	pop	r30
+ 39e:	8f 91       	pop	r24
+ 3a0:	0f 90       	pop	r0
+ 3a2:	0f be       	out	0x3f, r0	; 63
+ 3a4:	0f 90       	pop	r0
+ 3a6:	1f 90       	pop	r1
+ 3a8:	18 95       	reti
+
+000003aa <_exit>:
+ 3aa:	f8 94       	cli
+
+000003ac <__stop_program>:
+ 3ac:	ff cf       	rjmp	.-2      	; 0x3ac <__stop_program>

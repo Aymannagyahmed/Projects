@@ -1,0 +1,21 @@
+/*
+ * assignment3_11.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  Write a function that prints the frequency of a certain
+ *  character in a string.
+ */
+#include<stdio.h>
+#define sizee 500
+void frequencyOfChar(char c[]);
+void main(void){
+	char c[sizee]="azAZ@#$123az";
+	frequencyOfChar(c);
+}
+void frequencyOfChar(char c[]){
+	int i;
+	for(i=0;c[i]!='\0';i++){
+		printf("%d ",c[i]);
+	}
+}

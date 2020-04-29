@@ -1,0 +1,54 @@
+/*
+ * assignment3_21.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  Write a C function to return an array containing the values
+ *  between two 8-bits unsigned integers IN DESCENDING ORDER
+ *  INCLUSIZE. The function takes 2 values (LowerValue and
+ *  UpperValue), it shall determine the values in between, and then
+ *  arrange the sequence in descending order including the upper and lower values.
+ *  If the LowerValue is greater than the UpperValue, return an array
+ *  of 2 elements, both containing value = 0xFF
+ *  Example:
+ *  Input: LowerValue=2 and UpperValue=5
+ *  Output:
+ *  Output Array=5,4,3,2
+ *  Output Array Size=4
+ */
+#include <stdio.h>
+#define sizee 255
+unsigned int gArr[sizee];
+unsigned int* valuesBetweenTwoValues(unsigned int fvalue,unsigned int svalue,int* retSize);
+void main(void){
+	int i=0;
+	unsigned int f=2;
+	unsigned int s=5;
+	unsigned int retSizeArr=0;
+	valuesBetweenTwoValues(f,s,(int *)&retSizeArr);
+	printf("Output Array=");
+	for(i=0;i<retSizeArr;i++){
+		printf("%d,",gArr[i]);
+	}
+	printf("\nOutput Array Size= %d",retSizeArr);
+
+}
+
+unsigned int* valuesBetweenTwoValues(unsigned int fvalue,unsigned int svalue,int* retSize){
+	unsigned int i;
+	*retSize=1;
+	gArr[0]=svalue;
+	if((fvalue>=svalue) ||(svalue==(fvalue+1))){
+		printf("An array of 2 elements, both containing value = 0xFF");
+		gArr[0]=0xff;
+		gArr[1]=0xff;
+		*retSize=2;
+	}
+	else{
+		for(i=svalue-1;i>=fvalue;i--){
+			gArr[*retSize]=i;
+			(*retSize)++;
+		}
+	}
+	return gArr;
+}

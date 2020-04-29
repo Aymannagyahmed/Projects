@@ -1,0 +1,17 @@
+
+#include<avr/io.h>
+#include<util/delay.h>
+void main(void)
+{
+	/*gpio init*/
+	DDRB=0XFF;
+	PORTB=0X00;
+	while(1)
+	{
+		PORTB =PORTB^0XFF;
+		_delay_ms(800);
+	}
+
+
+
+}

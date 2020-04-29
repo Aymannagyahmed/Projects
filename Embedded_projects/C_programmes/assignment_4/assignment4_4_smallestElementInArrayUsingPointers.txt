@@ -1,0 +1,29 @@
+/*
+ * assignment_4_4.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  get the value of the smallest element in array using pointers.
+ */
+#include<stdio.h>
+#define sizee 5
+
+int smallestElementInArrayUsingPointers(int* arr,int size);
+void main(void){
+	int arr[sizee]={55,2,3,4,-5};
+	int smallestEment= smallestElementInArrayUsingPointers(arr,sizee);
+	printf("%d\n",smallestEment);
+
+
+}
+
+int smallestElementInArrayUsingPointers(int* arr,int size){
+	int i=0;
+	int min=*(arr+i);
+	for(i=1;i<size;i++){
+		if(min>(*(arr+i))){
+			min=*(arr+i);
+		}
+	}
+	return min;
+}

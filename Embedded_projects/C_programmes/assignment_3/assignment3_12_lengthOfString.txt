@@ -1,0 +1,21 @@
+/*
+ * assignment3_12.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  Write a function to find the length of a string
+ */
+#include<stdio.h>
+int lengthOfString(char str[]);
+void main(void){
+	char strn[50]="123456789";
+	int length=lengthOfString(strn);
+	printf("%d\n",length);
+}
+int lengthOfString(char str[]){
+	int i=0;
+	while(str[i]!=0){
+		i++;
+	}
+	return i;
+}

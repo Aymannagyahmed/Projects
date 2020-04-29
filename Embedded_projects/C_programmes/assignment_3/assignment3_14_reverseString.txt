@@ -1,0 +1,36 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *   function to reverse a string by passing it to a function.
+ */
+#include<stdio.h>
+#define sizee 500
+void reverseString(char str[]);
+void main(void){
+	char strn[sizee]="abcdef";
+	printf("( %s ) befor reverse\n",strn);
+	reverseString(strn);
+	printf("( %s ) after reverse\n",strn);
+}
+void reverseString(char str[]){
+	int i;
+	int j;
+	int count;
+	char temp;
+	for(i=0;str[i]!='\0';i++)
+	{
+
+	}
+	count=i;
+	i--;
+	for(j=0;j<i;j++)
+	{
+		temp=str[j];
+		str[j]=str[i];
+		str[i]=temp;
+		i--;
+	}
+	str[count]='\0';
+}

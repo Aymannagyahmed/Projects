@@ -1,0 +1,30 @@
+/*
+ * assignment_4_5.c
+ *
+ *  Created on: Mar 3, 2020
+ *      Author: AymanW
+ *  copy all elements of an array into another
+ *  array using pointers. The two arrays have
+ *  the same length and types.
+ */
+#include<stdio.h>
+#define sizee 10
+void coppyCharArrays(char* str1,char* str2);
+void main(void){
+	int i=0;
+	char strn1[sizee];
+	char strn2[sizee]="ayman";
+	coppyCharArrays(strn1,strn2);
+	while(*(strn1+i)!='\0'){
+		printf("%c",*(strn1+i));
+		i++;
+	}
+}
+void coppyCharArrays(char* str1,char* str2){
+	int i=0;
+	while(*(str2+i)!='\0'){
+		*(str1+i)=*(str2+i);
+		i++;
+	}
+	*(str1+i)='\0';
+}

@@ -1,0 +1,41 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *   C function that use the selection sort algorithm to sort
+ *   an integer array in ascending order
+ */
+#include<stdio.h>
+#define sizee 6
+void ascendingSelectionSort(int arr[],int size);
+void main(void){
+	int i;
+	int arr[sizee]={1,6,9,4,2,8};
+	ascendingSelectionSort(arr,sizee);
+	for(i=0;i<sizee;i++){
+		printf("%d ",arr[i]);
+	}
+}
+void ascendingSelectionSort(int arr[],int size){
+	int i;
+	int j;
+	int index;
+	/*lastmin for when the arr={1, 2, 4, _, _, _,} after the half of the array*/
+	int lastmin;
+	int min;
+	for(i=0;i<size;i++){
+		min=arr[i];
+		lastmin=min;
+		for(j=i+1;j<size;j++){
+			if(arr[j]<min){
+				min=arr[j];
+				index=j;
+			}
+		}
+		if(lastmin!=min){
+			arr[index]=arr[i];
+			arr[i]=min;
+		}
+	}
+}

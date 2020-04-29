@@ -1,0 +1,29 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C function to count the number of 1’s in an unsigned 32-bit integer.
+ */
+
+
+#include<stdio.h>
+int countTheNumberOf1s(int num);
+void main(){
+	int numb=0;
+	int numofones;
+	numofones=countTheNumberOf1s(numb);
+}
+
+int countTheNumberOf1s(int num){
+	int mask=0x00000001;
+	int i;
+	int count;
+	for(i=0;i<32;i++){
+		if((num&(mask<<i))){
+			count++;
+		}
+	}
+	printf("Number Of 1's in (%d) is %d\n",num,count);
+	return count;
+}

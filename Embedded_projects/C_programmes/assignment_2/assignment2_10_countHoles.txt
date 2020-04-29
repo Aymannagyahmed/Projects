@@ -1,0 +1,36 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  Complete the function countHoles. The function must return an integer
+ *	denoting the total number of holes in num.
+ */
+
+
+#include<stdio.h>
+int countHoles(long long int num);
+void main(){
+	int num =010;
+	int numoh;
+	numoh =countHoles(num);
+}
+
+int countHoles(long long int num){
+	int temp=num;
+	int didit;
+	int numOfH =0;
+	int arrOfHoles[10]={1,0,0,0,1,0,1,0,2,1};
+	if(num==0){
+		numOfH=numOfH+arrOfHoles[num];
+		printf("num of holes is %d\n",numOfH);
+		return numOfH;
+	}
+	while(temp!=0){
+		didit=temp%10;
+		numOfH=numOfH+arrOfHoles[didit];
+		temp=temp/10;
+	}
+	printf("num of holes is %d\n",numOfH);
+	return numOfH;
+}

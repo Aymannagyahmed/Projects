@@ -1,0 +1,29 @@
+/*
+ * assignment3_1.c
+ *
+ *  Created on: Feb 24, 2020
+ *      Author: AymanW
+ *  C a program that computes the nth term of the arithmetic
+ *  series:
+ *  1, 3, 5, 7, 9,.....
+ *  Run the program to compute the 100th term of the given series.
+ */
+#include <stdio.h>
+int* nthTermOfArithmeticSeries(int firstTerm,int commonDifference,int nthTerm);
+void main(void){
+	int fterm=1;
+	int diff=2;
+	int n=100;
+	int* result;
+	result=nthTermOfArithmeticSeries(fterm,diff,n);
+	printf("the %dth term is %d\n",n,*result);
+}
+int* nthTermOfArithmeticSeries(int firstTerm,int commonDifference,int nthTerm){
+	int i;
+	int *num=&firstTerm;
+	for(i=1;i<nthTerm;i++){
+		*num=*num+commonDifference;
+	}
+	return num;
+}
+

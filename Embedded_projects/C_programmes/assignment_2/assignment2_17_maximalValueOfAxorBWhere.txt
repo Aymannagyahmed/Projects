@@ -1,0 +1,38 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  Given two integers: L and R, Find the maximal value of A xor B where
+	A and B satisfy the condition L =< A <= B <= R Constrains: 1 <= L <= R <=
+	1000
+ */
+
+
+#include<stdio.h>
+void maximalValueOfAxorBWhere(int L,int R);
+void main(){
+	int L;
+	int R;
+	printf("put the L num\n");
+	fflush(stdout);
+	scanf("%d",&L);
+	printf("put the R num\n");
+	fflush(stdout);
+	scanf("%d",&R);
+	maximalValueOfAxorBWhere(L,R);
+}
+void maximalValueOfAxorBWhere(int L,int R){
+	int A;
+	int B;
+	int maxNum=0;
+	for(B=L;B<=R;B++){
+		for(A=L;A<=B;A++){
+			if((A^B)>maxNum){
+				maxNum = A^B;
+			}
+		printf("%d xor %d = %d\n",A,B,(A^B));
+		}
+	}
+	printf("the max num of A xor B is %d\n",maxNum);
+}

@@ -1,0 +1,49 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that return the addition or subtraction or
+	multiplication or division for two numbers. The function should take the
+	required operation and two numbers as arguments. It also should check
+	that the input operation is one of those operation that mentioned before
+	and if not it should return error. The function should be implemented
+	using switch case.
+ */
+#include<stdio.h>
+double calc(int firestNum,int secondNum,char operation);
+void main(){
+	int x=10,y=2;
+	double z=0;
+	z=calc(x,y,'+');
+	
+}
+double calc(int firestNum,int secondNum,char operation){
+	switch(operation){
+	case '*':
+		printf("(%d) %c (%d)= %lf \n",firestNum,operation,secondNum,(double)firestNum*secondNum);
+		return ((double) firestNum*secondNum);
+		break;
+	case '/':
+		printf("(%d) %c (%d)= %lf \n",firestNum,operation,secondNum,(double)firestNum/secondNum);
+		return ((double) firestNum/secondNum);
+		break;
+	case '+':
+		printf("(%d) %c (%d)= %lf \n",firestNum,operation,secondNum,(double)firestNum+secondNum);
+		return ((double) firestNum+secondNum);
+		break;
+	case '-':
+		printf("(%d) %c (%d)= %lf \n",firestNum,operation,secondNum,(double)firestNum-secondNum);
+		return ((double) firestNum-secondNum);
+		break;
+	default:
+		printf("You must put one operation of thees (/,*,-,+)\n");
+		return 0;
+		break;
+
+	}
+
+
+
+
+}

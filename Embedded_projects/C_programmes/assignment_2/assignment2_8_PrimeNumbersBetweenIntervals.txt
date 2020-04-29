@@ -1,0 +1,38 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ *  C Function that display Prime Numbers between Intervals (two
+	numbers) by Making Function.
+ */
+
+#include<stdio.h>
+void PrimeNumbersBetweenIntervals(int firestNum,int secondNum);
+void main(){
+	int x=5,y=17;
+	PrimeNumbersBetweenIntervals(x,y);
+}
+
+void PrimeNumbersBetweenIntervals(int firestNum,int secondNum){
+	int count;
+	int i,j;
+	printf("Prime Numbers Between (%d) and (%d) is\n",firestNum,secondNum);
+	for(i=firestNum;i<=secondNum;i++){
+		count=0;
+		for(j=2;j<i;j++){
+			if(!(i%j)){
+				count++;
+				break;
+			}
+		}
+		if(!((firestNum==1)&& (i==1))){
+			if(count==0){
+				printf("%d ",j);
+			}
+		}
+		else{
+			printf("1 ");
+		}
+	}
+}

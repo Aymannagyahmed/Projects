@@ -1,0 +1,19 @@
+/*
+ * assignment2_1.c
+ *
+ *  Created on: Feb 18, 2020
+ *      Author: AymanW
+ * C Function that prints the cube of any number
+ */
+
+#include<stdio.h>
+void cube_f(double num);
+void main(){
+	double number=10;
+	cube_f(number);
+
+}
+void cube_f(double num){
+	printf("the cube of %lfd is %lf\n",num,(num*num));
+
+}
