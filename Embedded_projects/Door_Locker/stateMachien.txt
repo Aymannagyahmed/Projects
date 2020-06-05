@@ -1,0 +1,38 @@
+@startuml
+[*] --> Welcome
+Welcome : display welcome string
+Wait: waitting 15 second
+Welcome:counter of trailers =0
+ChangePassword:passwor is changed
+OpenDoor:door is opinning
+OpenDoor:counter 5
+OpenDoor:door is clossing
+OpenDoor:counter 5
+cancel: your choise cancel, waite 5 sec
+inValidPassword : enterPasword berween 4:10 numbers + "#"
+validPassword : password is changed
+
+
+
+Welcome -> EnterPassword
+EnterPassword: prompt User to enter password
+EnterPassword: accept numbers from keypad
+EnterPassword: checks entered password after pressing #
+CorrectPassword: press 1 to open door
+CorrectPassword: press # to change password
+EnterPassword --> CorrectPassword : password correct
+EnterPassword --> WrongPassword : password wrong
+WrongPassword --> IncrementWrong : password wrong
+IncrementWrong --> EnterPassword : wrong <3
+IncrementWrong --> Wait : wrong >=3
+Wait --> EnterPassword  : after 15 seconds
+CorrectPassword --> OpenDoor : press 1
+OpenDoor --> Welcome : after 10 seconds
+CorrectPassword --> ChangePassword : press #
+ChangePassword --> validPassword : password is changed
+validPassword --> Welcome
+ChangePassword --> inValidPassword
+inValidPassword --> ChangePassword 
+ChangePassword --> cancel
+cancel --> Welcome
+@enduml
